@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, {useState} from "react";
+
+import api from "../utils/api";
 
 const initialColor = {
   color: "",
@@ -17,15 +18,25 @@ const ColorList = ({ colors, updateColors }) => {
   };
 
   const saveEdit = e => {
-    e.preventDefault();
+    // e.preventDefault();
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
-  };
-
+    api()
+    .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
+    .then(res=>{console.log(res)})
+    .catch(err=>{console.log(err)})
+  }
+  
+  
   const deleteColor = color => {
     // make a delete request to delete this color
+    api()
+    .delete(`/api/colors/${colorToEdit.id}`, colorToEdit)
+    .then(res=>{console.log(res)})
+    .catch(err=>{console.log(err)})
   };
+
 
   return (
     <div className="colors-wrap">
@@ -77,11 +88,12 @@ const ColorList = ({ colors, updateColors }) => {
           <div className="button-row">
             <button type="submit">save</button>
             <button onClick={() => setEditing(false)}>cancel</button>
+            <button>delete</button>
           </div>
         </form>
       )}
       <div className="spacer" />
-      {/* stretch - build another form here to add a color */}
+      
     </div>
   );
 };
